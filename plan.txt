@@ -1,0 +1,25 @@
+OK SO THE Pllanr will work as such:
+
+Features:
+1.Customizable and addable templates to adjust the time intervals
+2.Customizable tasks that can be added to a specific date to a specific template.
+3.A timer following the tasks accordingly
+4.Sequences can also be repeated according to wish
+
+Languages to use:
+1.Html
+2.Css
+3.Bootstrap
+4.Java Script
+5.Jinja
+5.Flask
+6.Sql
+
+What will the website look like?
+1.minimalistic
+2.Always fullscreen. Exiting fullscreen will stop functioning the website. unless specified not to.
+3.Its not possible to exactly write about the design. Design is design only.
+
+Websites to use for hosting:
+1.Github pages
+--Why cus we got github pro
