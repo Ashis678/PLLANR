@@ -23,3 +23,44 @@ What will the website look like?
 Websites to use for hosting:
 1.Github pages
 --Why cus we got github pro
+
+Got it! Let’s adjust the roadmap for your tighter timeline:  
+
+### **Revised Roadmap for Pllanr**  
+
+#### **Phase 1: Planning and Setup (By November 23)**  
+- Finalize requirements and feature specifics.  
+- Set up the Flask environment and GitHub repository.  
+- Sketch wireframes or mockups for the UI.  
+
+#### **Phase 2: Frontend Development (November 24 - November 28)**  
+- **HTML & CSS:**  
+  - Build pages for Templates, Task Manager, Timer, and Settings.  
+- **Bootstrap Integration:** Style for a clean, minimal look.  
+- Implement fullscreen behavior with JavaScript.  
+- Add basic navigation between pages.  
+
+#### **Phase 3: Backend Development (November 29 - December 5)**  
+- **Database Setup:**  
+  - Create tables for templates, tasks, and schedules.  
+  - Set up Flask-SQLAlchemy or SQLite.  
+- **API/Routes:**  
+  - Implement CRUD operations for tasks and templates.  
+  - Use Jinja templates for dynamic page rendering.  
+
+#### **Phase 4: Core Functionality (December 6 - December 10)**  
+- Develop the timer feature to follow tasks and sequences.  
+- Allow users to customize and repeat task sequences.  
+- Link templates to specific dates.  
+
+#### **Phase 5: Testing and Finalization (December 11 - December 14)**  
+- Test functionality (timer, templates, task assignments).  
+- Debug any issues with database operations or UI/UX.  
+- Optimize for performance and browser compatibility.  
+
+#### **Phase 6: Deployment (December 15)**  
+- Push the project to GitHub Pages and conduct final tests.  
+
+---
+
+Does this schedule feel more realistic? I can help you prioritize further if needed!
