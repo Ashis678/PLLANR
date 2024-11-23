@@ -10,14 +10,14 @@ if __name__ == '__main__':
     app.run(debug=True)
 @app.route('/templates')
 def templates():
-    return render_template('templates.html')
+    return render_template('template_creator.html')
 
-@app.route('/time-config')
-def time_config():
-    return render_template('time_config.html')
-
-@app.route('/tasks')
+@app.route('/settings')
 def tasks():
-    return render_template('tasks.html')
+    return render_template('settings.html')
+
+@app.route('/logout')
+def tasks():
+    return render_template('logout.html')
 
 # Add other routes as needed

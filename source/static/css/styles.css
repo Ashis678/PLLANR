@@ -1,69 +1,109 @@
-/* General Dark Mode Styling */
+/* Basic Reset and Dark Theme */
 body {
-    background-color: #121212 !important; /* Ensures body stays dark */
-    color: #ffffff;
-    margin: 0;
-    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text */
+    font-family: 'Arial', sans-serif;
 }
 
 .navbar {
-    background-color: #1f1f1f;
-    color: white;
-    padding: 10px 20px;
+    background-color: #1f1f1f; /* Darker background for navbar */
+    color: #fff;
 }
 
-#Hello {
-    font-size: 1.5rem;
-    color: #0d6efd;
-    margin-left: 10px;
+.navbar a {
+    color: #fff !important;
 }
 
+/* Sidebar (Offcanvas) */
 .offcanvas {
-    background-color: #1f1f1f !important; /* Sidebar dark theme */
-    color: #ffffff;
-}
-
-/* Sidebar Link Styles */
-.nav-link {
-    color: #ffffff;
-    font-size: 1.2rem;
-}
-
-.nav-link:hover {
-    background-color: #333333;
-    border-radius: 5px;
-}
-
-.nav-link.active {
-    font-weight: bold;
-    color: #0d6efd;
-}
-
-/* Close Button (Invert for Dark Mode) */
-.btn-close {
-    filter: invert(1);
-}
-
-/* Sidebar Animations */
-.offcanvas.offcanvas-start {
-    transform: translateX(-100%); /* Start hidden offcanvas */
-    transition: transform 0.5s ease-in-out; /* Smooth transition */
+    background-color: #1f1f1f; /* Dark background for sidebar */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Smoother transition */
+    opacity: 0; /* Initially hidden */
+    transform: translateX(-100%); /* Initially off-screen */
 }
 
 .offcanvas.show {
-    transform: translateX(0); /* Slide into view */
+    opacity: 1; /* Fade in */
+    transform: translateX(0); /* Slide in */
 }
 
-/* Fade-In Effect for Sidebar Content */
+/* Sidebar Close Animation (When Sidebar Closes) */
+.offcanvas:not(.show) {
+    opacity: 0; /* Fully hidden when not shown */
+    transform: translateX(-100%); /* Fully off-screen when closed */
+}
+
+/* Sidebar Header */
+.offcanvas-header {
+    background-color: #333; /* Dark background for header */
+    color: #fff;
+}
+
+.offcanvas-title {
+    color: #fff;
+}
+
+/* Close button style */
+.btn-close {
+    color: #fff;
+}
+
+/* Sidebar links and hover effects */
+.nav-link {
+    color: #e0e0e0; /* Light color for links */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition for color change */
+}
+
+.nav-link:hover {
+    color: #fff; /* White text on hover */
+    background-color: #007bff; /* Blue background on hover */
+}
+
+/* Animation for navbar toggle button */
+.navbar button {
+    transition: transform 0.3s ease;
+}
+
+/* Smooth transition for sidebar toggle button */
+.navbar button:hover {
+    transform: rotate(90deg); /* Rotate the menu button on hover */
+}
+
+/* Make the sidebar content take full height */
 .offcanvas-body {
-    animation: fadeIn 1s ease-in; /* Animation on content */
+    height: 100%;
+    overflow-y: auto; /* Allow scrolling if content exceeds height */
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+/* Ensure the navbar items are aligned properly */
+.navbar .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Main Content Area */
+#Hello {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+/* Mobile and smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+        background-color: #121212; /* Dark background for mobile */
     }
-    to {
-        opacity: 1;
+
+    .navbar a {
+        color: #fff;
+    }
+
+    .offcanvas {
+        width: 250px; /* Set the width of the sidebar */
+    }
+
+    /* Navbar toggle button */
+    .navbar button {
+        background-color: #333; /* Dark button */
     }
 }
