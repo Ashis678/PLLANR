@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pllanr - Dark Mode with Animations</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Link to Custom CSS -->
+    <link rel="stylesheet" href="source/static/css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <!-- Sidebar Toggle Button -->
+            <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <img src="5259008.png" alt="Menu" style="width: 38px; height: 38px">
+            </button>
+            <span class="text-center" id="Hello">PLANNR</span>
+        </div>
+    </nav>
+
+    <!-- Sidebar (Offcanvas Menu) -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Navigation</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p>Navigate through PLANNR using the options below:</p>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="./templates">Templates</a></li>
+                <li class="nav-item"><a class="nav-link" href="./time-config">Time Config</a></li>
+                <li class="nav-item"><a class="nav-link" href="./tasks">Tasks</a></li>
+                <li class="nav-item"><a class="nav-link" href="./pomodoro">Pomodoro</a></li>
+                <li class="nav-item"><a class="nav-link" href="./settings">Settings</a></li>
+                <li class="nav-item"><a class="nav-link text-danger" href="./logout">Log Out</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

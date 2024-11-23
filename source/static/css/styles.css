@@ -1,0 +1,69 @@
+/* General Dark Mode Styling */
+body {
+    background-color: #121212 !important; /* Ensures body stays dark */
+    color: #ffffff;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #1f1f1f;
+    color: white;
+    padding: 10px 20px;
+}
+
+#Hello {
+    font-size: 1.5rem;
+    color: #0d6efd;
+    margin-left: 10px;
+}
+
+.offcanvas {
+    background-color: #1f1f1f !important; /* Sidebar dark theme */
+    color: #ffffff;
+}
+
+/* Sidebar Link Styles */
+.nav-link {
+    color: #ffffff;
+    font-size: 1.2rem;
+}
+
+.nav-link:hover {
+    background-color: #333333;
+    border-radius: 5px;
+}
+
+.nav-link.active {
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+/* Close Button (Invert for Dark Mode) */
+.btn-close {
+    filter: invert(1);
+}
+
+/* Sidebar Animations */
+.offcanvas.offcanvas-start {
+    transform: translateX(-100%); /* Start hidden offcanvas */
+    transition: transform 0.5s ease-in-out; /* Smooth transition */
+}
+
+.offcanvas.show {
+    transform: translateX(0); /* Slide into view */
+}
+
+/* Fade-In Effect for Sidebar Content */
+.offcanvas-body {
+    animation: fadeIn 1s ease-in; /* Animation on content */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
