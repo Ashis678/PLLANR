@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pllanr - Pomodoro Timer</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Link to Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .timer {
+            font-size: 4rem;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <!-- Sidebar Toggle Button -->
+            <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <img src="../static/images/5259008.png" alt="Menu" style="width: 38px; height: 38px">
+            </button>
+            <span class="text-center" id="Hello">PLANNR</span>
+        </div>
+    </nav>
+
+    <!-- Sidebar (Offcanvas Menu) -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Navigation</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p>Navigate through PLANNR using the options below:</p>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="./base">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="./templates">Templates</a></li>
+                <li class="nav-item"><a class="nav-link" href="./pomodoro">Pomodoro</a></li>
+                <li class="nav-item"><a class="nav-link" href="./letsdothis">Let's Do This</a></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container text-center mt-5">
+        <h1 class="my-4">Pomodoro Timer</h1>
+        <div class="mb-3">
+            <label for="timeSelector" class="form-label">Set Timer (minutes):</label>
+            <input type="number" id="timeSelector" class="form-control w-25 mx-auto" min="1" max="120" value="25">
+        </div>
+        <div class="timer" id="timer">25:00</div>
+        <div class="mt-4">
+            <button class="btn btn-success" id="startButton">Start</button>
+            <button class="btn btn-warning" id="pauseButton">Pause</button>
+            <button class="btn btn-danger" id="resetButton">Reset</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let timer;
+        let isRunning = false;
+        let timeRemaining = 25 * 60; // Default 25 minutes in seconds
+
+        const timerDisplay = document.getElementById('timer');
+        const timeSelector = document.getElementById('timeSelector');
+        const startButton = document.getElementById('startButton');
+        const pauseButton = document.getElementById('pauseButton');
+        const resetButton = document.getElementById('resetButton');
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (isRunning) return;
+            isRunning = true;
+            timer = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timer);
+                    alert("Time's up!");
+                    isRunning = false;
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timer);
+            isRunning = false;
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            timeRemaining = parseInt(timeSelector.value) * 60;
+            updateDisplay();
+        }
+
+        timeSelector.addEventListener('change', () => {
+            if (!isRunning) {
+                timeRemaining = parseInt(timeSelector.value) * 60;
+                updateDisplay();
+            }
+        });
+
+        startButton.addEventListener('click', startTimer);
+        pauseButton.addEventListener('click', pauseTimer);
+        resetButton.addEventListener('click', resetTimer);
+
+        // Initialize display
+        updateDisplay();
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLANNR - Task Timer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        .timer {
+            font-size: 4rem;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .task-box {
+            background: #343a40;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <!-- Sidebar Toggle Button -->
+            <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <img src="../static/images/5259008.png" alt="Menu" style="width: 38px; height: 38px">
+            </button>
+            <span class="text-center" id="Hello">PLANNR</span>
+        </div>
+    </nav>
+    
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Navigation</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p>Navigate through PLANNR using the options below:</p>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="./base">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="./templates">Templates</a></li>
+                <li class="nav-item"><a class="nav-link" href="./pomodoro">Pomodoro</a></li>
+                <li class="nav-item"><a class="nav-link" href="./letsdothis">Let's Do This</a></li>
+                
+            </ul>
+        </div>
+    </div>
+    
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Task Timer</h1>
+        <form method="POST" action="/letsdothis">
+            <div class="mb-3">
+                <label for="templateSelect" class="form-label">Select Template</label>
+                <select class="form-select" id="templateSelect" name="template_id" onchange="updateTasks()" required>
+                    <option value="" disabled selected>Select a template</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="taskSelect" class="form-label">Select Task</label>
+                <select class="form-select" id="taskSelect" name="task_id" required>
+                    <option value="" disabled selected>Select a task</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="setTask()">Start Timer</button>
+        </form>
+
+        <div class="task-box">
+            <h3>Current Task: <span id="currentTask">None</span></h3>
+        </div>
+        <div class="timer" id="timer">00:00</div>
+        <div class="mt-4">
+            <button class="btn btn-success" id="startButton">Start</button>
+            <button class="btn btn-warning" id="pauseButton">Pause</button>
+            <button class="btn btn-danger" id="resetButton">Reset</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let timer;
+        let isRunning = false;
+        let timeRemaining = 0;
+
+        const timerDisplay = document.getElementById('timer');
+        const startButton = document.getElementById('startButton');
+        const pauseButton = document.getElementById('pauseButton');
+        const resetButton = document.getElementById('resetButton');
+        const currentTaskDisplay = document.getElementById('currentTask');
+        const taskSelect = document.getElementById('taskSelect');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchTemplates();
+        });
+
+        function fetchTemplates() {
+            fetch('/get_templates')
+                .then(response => response.json())
+                .then(data => {
+                    const templateSelect = document.getElementById('templateSelect');
+                    templateSelect.innerHTML = '<option value="" disabled selected>Select a template</option>';
+                    data.templates.forEach(template => {
+                        const option = document.createElement('option');
+                        option.value = template.id;
+                        option.textContent = template.name;
+                        templateSelect.appendChild(option);
+                    });
+                });
+        }
+
+        function updateTasks() {
+            const templateId = document.getElementById('templateSelect').value;
+
+            fetch(`/get_tasks/${templateId}`)
+                .then(response => response.json())
+                .then(data => {
+                    taskSelect.innerHTML = '<option value="" disabled selected>Select a task</option>';
+                    data.tasks.forEach(task => {
+                        const option = document.createElement('option');
+                        option.value = task.id;
+                        option.textContent = `${task.name} (${task.interval} mins)`;
+                        taskSelect.appendChild(option);
+                    });
+                });
+        }
+
+        function setTask() {
+            const selectedTask = taskSelect.options[taskSelect.selectedIndex].text;
+            const interval = parseInt(taskSelect.options[taskSelect.selectedIndex].text.split('(')[1].split(' ')[0], 10);
+            currentTaskDisplay.textContent = selectedTask;
+            timeRemaining = interval * 60; // Convert minutes to seconds
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            console.log(`Timer updated: ${minutes}:${seconds}`);
+        }
+
+        function startTimer() {
+            if (isRunning) return;
+            isRunning = true;
+            console.log("Timer started");
+            timer = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timer);
+                    alert("Time's up for the task!");
+                    isRunning = false;
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            console.log("Timer paused");
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            timeRemaining = 0;
+            updateDisplay();
+            console.log("Timer reset");
+        }
+
+        startButton.addEventListener('click', startTimer);
+        pauseButton.addEventListener('click', pauseTimer);
+        resetButton.addEventListener('click', resetTimer);
+
+        // Initialize display
+        updateDisplay();
+    </script>
+</body>
+</html>
